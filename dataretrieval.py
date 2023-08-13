@@ -3,18 +3,19 @@ import json
 
 
 
-with open("config.json", "r") as config:
-    config = json.load(config)
+with open("C:\\Users\\laeat\\Documents\\Coding\\config.json", "r") as config:
+    configdata = json.load(config)
 
 
-user = config["user"]
-password = config["password"]
-host = config["host"]
-database = config["database"]
-
+connection = mysql.connector.connect(
+    user = configdata["user"],
+    password = configdata["password"],
+    host = configdata["host"],
+    database = configdata["database"]
+)
 # ^^ For security reasons, the connection details are kept seperate in a config.json file
 
-connection = mysql.connector.connect(**config)
+
 cursor = connection.cursor()
 
 
