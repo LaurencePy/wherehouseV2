@@ -19,7 +19,7 @@ for i in range(1, 101):
     randomnum = random.uniform(5,100)
     saleprice = round(randomnum, 2)
     quantitysold = random.randint(1,1000)
-    csvdata.append([orderid, itemid, saledate, saleprice, quantitysold]) 
+    csvdata.append([orderid, itemid, saledate, saleprice, quantitysold])
 
 
 
