@@ -87,9 +87,9 @@ def gradientDescent(inputs, outputs, coefficients, iterations, learningrate):
 result = gradientDescent(inputs, outputs, coefficients, iterations, learningrate)
 
 
-optimizedcoefficients = result[0]
+optimisedcoefficients = result[0]
 costhistory = result[1]
 
-print("Optimized coefficients:", optimizedcoefficients)
-finalcost = computeCost(inputs, outputs, optimizedcoefficients)
+print("Optimised coefficients:", optimisedcoefficients)
+finalcost = computeCost(inputs, outputs, optimisedcoefficients)
 print("Final cost:", finalcost)
