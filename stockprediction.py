@@ -28,6 +28,7 @@ normalised_data = (normalise_data - normalise_data.mean()) / normalise_data.std(
 
 normalised2_data = pd.concat([avoid_data, normalised_data.reset_index(drop=True)], axis=1)
 
+#################################################
 
 inputs = normalised2_data.iloc[:, 1:]
 
@@ -41,5 +42,30 @@ coefficients = np.zeros([1, inputs.shape[1]])
 learningrate = 0.01
 iterations = 1000
 
-print(outputs)
 
+def computeCost(inputs,outputs,coefficients):
+    sum1 = np.power(((inputs @ coefficients.T)-outputs),2)
+    return np.sum(sum1)/(2 * len(inputs))
+
+#################################################
+
+
+def gradientDescent(inputs, outputs, coefficients, iterations, learningrate):
+    costhistory = np.zeros(iterations)
+    for i in range(iterations):
+        predictionerrors = inputs @ coefficients.T - outputs
+        coefficients = coefficients - (learningrate / len(inputs)) * (predictionerrors.T @ inputs)
+        costhistory[i] = computeCost(inputs, outputs, coefficients)
+    
+    return coefficients, costhistory
+
+
+result = gradientDescent(inputs, outputs, coefficients, iterations, learningrate)
+
+
+optimizedcoefficients = result[0]
+costhistory = result[1]
+
+print("Optimized coefficients:", optimizedcoefficients)
+finalcost = computeCost(inputs, outputs, optimizedcoefficients)
+print("Final cost:", finalcost)
