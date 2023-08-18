@@ -6,7 +6,6 @@ tblsalesstatistics_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehou
 tblsales_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblSales.csv")
 tblitems_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblitems.csv")
 
-tblsalesstatistics_data["predicted_sales"] = float("nan")
 
 tblsales_data["SaleDate"] = pd.to_datetime(tblsales_data["SaleDate"])
 tblitems_data["ExpiryDate"] = pd.to_datetime(tblitems_data["ExpiryDate"])
@@ -29,9 +28,7 @@ normalised_data = (normalise_data - normalise_data.mean()) / normalise_data.std(
 
 normalised2_data = pd.concat([avoid_data, normalised_data.reset_index(drop=True)], axis=1)
 
-
-
-normalised3_data = pd.concat([normalised2_data, tblsalesstatistics_data["predicted_sales"]], )
+normalised3_data = pd.concat([normalised2_data, tblsalesstatistics_data["predict_sales"]], )
 
 
 inputs = normalised2_data.iloc[:, 1:]
@@ -40,10 +37,11 @@ ones = np.ones([inputs.shape[0], 1])
 
 inputs = np.concatenate((ones, inputs), axis=1)
 
-outputs = normalised3_data.iloc[:, 0:1].values
+outputs = tblsalesstatistics_data["predict_sales"].values
 coefficients = np.zeros([1, inputs.shape[1]]) 
 
 learningrate = 0.01
 iterations = 1000
 
+print(outputs)
 
