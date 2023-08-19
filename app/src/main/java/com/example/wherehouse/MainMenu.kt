@@ -1,4 +1,5 @@
 package com.example.wherehouse
 
-class NextActivity {
+class MainMenu {
+
 }
