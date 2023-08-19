@@ -1,9 +1,14 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from datetime import date
+from datetime import timedelta
+
+date = date.today()
+
 
 tblsalesstatistics_data = pd.read_csv(
-    r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblSalesStatistics.csv"
+    r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblSalesStatistics2.csv"
 )
 tblsales_data = pd.read_csv(
     r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblSales.csv"
@@ -93,3 +98,28 @@ costhistory = result[1]
 print("Optimised coefficients:", optimisedcoefficients)
 finalcost = computeCost(inputs, outputs, optimisedcoefficients)
 print("Final cost:", finalcost)
+
+#################################################
+
+item_ID_input = int(input("Enter the ItemID to predict sales over the next 30 days: "))
+
+if item_ID_input > 0:
+    item_predicted_sales = normalise_data["predict_sales"].values[0]
+
+    today = date.today()
+    next_30_days = [today + timedelta(days=i) for i in range(30)]
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(next_30_days, [item_predicted_sales] * 30, marker="o", color="blue", label="Predicted Sales")
+    plt.xlabel("Date")
+    plt.ylabel("Predicted Sales")
+    plt.title(f"Predicted Sales for ItemID {item_ID_input} over the next 30 days")
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.tight_layout()
+    plt.legend()
+    plt.show()
+else:
+    print("Incorrect Item ID input")
+
+    

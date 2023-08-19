@@ -2,7 +2,6 @@ import mysql.connector
 import json
 
 
-
 with open("C:\\Users\\laeat\\Documents\\Coding\\config.json", "r") as config:
     configdata = json.load(config)
 
