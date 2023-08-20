@@ -18,7 +18,7 @@ connection = mysql.connector.connect(
 cursor = connection.cursor()
 
 
-cursor.execute("SELECT * FROM tblSalesStatistics")
+cursor.execute("SELECT * FROM tblItems")
 result = cursor.fetchall()
 
 for row in result:

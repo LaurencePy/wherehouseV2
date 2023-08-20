@@ -20,7 +20,6 @@
         android:theme="@style/Theme.Wherehouse"
         tools:targetApi="31">
 
-        <!-- Set UserLogin as the LAUNCHER activity -->
         <activity
             android:name="com.example.wherehouse.UserLogin"
             android:exported="true">
@@ -33,6 +32,41 @@
 
         <activity
             android:name="com.example.wherehouse.MainMenu">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.ViewStock"
+            android:label="View Stock">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.EditStock"
+            android:label="Edit Stock">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.ItemWithdrawals"
+            android:label="Item Withdrawals">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.ItemDeposits"
+            android:label="Item Deposits">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.CycleCounting"
+            android:label="Cycle Counting">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.AddNewItemTypeToStock"
+            android:label="Add New Item Type to Stock">
+        </activity>
+
+        <activity
+            android:name="com.example.wherehouse.StockPrediction"
+            android:label="Stock Prediction">
         </activity>
 
 
