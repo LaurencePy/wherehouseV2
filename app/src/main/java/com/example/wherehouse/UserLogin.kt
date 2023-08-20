@@ -23,7 +23,7 @@ class UserLogin : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.user_login)
 
         val cameraButton: Button = findViewById(R.id.cameraButton)
         barcodeEditText = findViewById(R.id.barcodeEditText)
