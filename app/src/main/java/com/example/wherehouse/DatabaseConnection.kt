@@ -1,33 +1,33 @@
-import android.util.Pair
-import java.io.FileReader
+import android.content.Context
+import android.content.res.AssetManager
+import android.util.Log
+import com.google.gson.Gson
+import java.io.InputStreamReader
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.ResultSet
 import java.sql.SQLException
-import com.google.gson.JsonParser
-import java.sql.Connection
-import com.google.gson.Gson
-import java.io.Reader
-import android.util.Log
+
+data class Config(val username: String, val password: String)
+
 object DatabaseConnection {
-    fun getConnection(configFilePath: String): Connection {
+    fun getConnection(assetManager: AssetManager, configFileName: String): Connection {
         return try {
             Class.forName("com.mysql.cj.jdbc.Driver")
             val jdbcUrl = "jdbc:mysql://35.242.177.204:3306/wherehouse1"
-            val (username, password) = readCredentialsFromConfig(configFilePath)
+            val (username, password) = readCredentialsFromConfig(assetManager, configFileName)
             DriverManager.getConnection(jdbcUrl, username, password)
         } catch (e: ClassNotFoundException) {
             throw SQLException("MySQL JDBC driver not found")
         }
     }
 
-    private fun readCredentialsFromConfig(configFilePath: String): Pair<String, String> {
-        val reader: Reader = FileReader(configFilePath)
+    private fun readCredentialsFromConfig(assetManager: AssetManager, configFileName: String): Pair<String, String> {
         val gson = Gson()
-        val json = gson.fromJson(reader, Config::class.java)
+        val json = assetManager.open(configFileName).bufferedReader().use { it.readText() }
+        val config = gson.fromJson(json, Config::class.java)
 
-        val username = json.username
-        val password = json.password
+        val username = config.username
+        val password = config.password
 
         return Pair(username, password)
     }
@@ -51,10 +51,12 @@ object DatabaseConnection {
     }
 }
 
-fun main() {
+fun main(context: Context) {
     try {
-        val configFilePath = "C:\\Users\\laeat\\Documents\\Coding\\config.json"
-        val connection = DatabaseConnection.getConnection(configFilePath)
+        val configFileName = "config.json"
+        val assetManager: AssetManager = context.assets
+
+        val connection = DatabaseConnection.getConnection(assetManager, configFileName)
         DatabaseConnection.getAllData(connection, "tblitems", "ItemID")
     } catch (e: SQLException) {
         e.printStackTrace()
