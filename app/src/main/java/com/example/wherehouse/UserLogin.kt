@@ -55,9 +55,10 @@ class UserLogin : AppCompatActivity() {
 
         if (result != null && result.contents != null) {
             val scannedBarcode = result.contents
-            if ("12345678" == scannedBarcode || "12345678" == barcodeEditText.text.toString()) {
+            if ("12345678" == scannedBarcode) {
                 openNextPage()
             }
         }
     }
+
 }
