@@ -36,7 +36,7 @@ class WarehousePredictor:
         ones = np.ones([self.inputs.shape[0], 1])
         self.inputs = np.concatenate((ones, self.inputs), axis=1)
         self.outputs = self.normalised2_data["predict_sales"].values
-        expiry = self.tblitems_data["ExpiryDate"]
+        expiry = self.tblitems_data["ExpiryDate"]  # Include ExpiryDate values
         self.coefficients = np.zeros([1, self.inputs.shape[1]])
         return expiry
 
@@ -56,11 +56,11 @@ class WarehousePredictor:
         if item_id_input > 0:
             item_data = self.normalised2_data[self.normalised2_data['ItemID'] == item_id_input]
 
+            # Assume 'SalesMonth' represents months
             sales_month = item_data["SalesMonth"].values
             sales_amount = item_data["predict_sales"].values
 
-            sales_amount = sales_amount * self.normalise_data["predict_sales"].std() + self.normalise_data["predict_sales"].mean()
-
+            # Scale 'SalesMonth' for a month (30 days)
             sales_month_scaled = sales_month * 30
 
             plt.figure(figsize=(10, 6))
@@ -72,12 +72,12 @@ class WarehousePredictor:
             plt.tight_layout()
             plt.legend()
 
+            # Set x-axis limits to display 30 days
             plt.xlim(0, 30)
 
             plt.show()
         else:
             print("Incorrect Item ID input")
-
 
 
 

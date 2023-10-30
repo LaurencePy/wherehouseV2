@@ -36,7 +36,7 @@ class WarehousePredictor:
         ones = np.ones([self.inputs.shape[0], 1])
         self.inputs = np.concatenate((ones, self.inputs), axis=1)
         self.outputs = self.normalised2_data["predict_sales"].values
-        expiry = self.tblitems_data["ExpiryDate"]
+        expiry = self.tblitems_data["ExpiryDate"]  # Include ExpiryDate values
         self.coefficients = np.zeros([1, self.inputs.shape[1]])
         return expiry
 
@@ -52,37 +52,30 @@ class WarehousePredictor:
             cost_history[i] = self.compute_cost()
         self.cost_history = cost_history
 
-    def predict_sales_for_item(self, item_id_input):
+    def predict_sales_for_item(self, item_id_input, expiry):
         if item_id_input > 0:
-            item_data = self.normalised2_data[self.normalised2_data['ItemID'] == item_id_input]
+            item_predicted_sales = self.normalise_data["predict_sales"].values[0]
+            today = date.today()
+            next_30_days = [today + timedelta(days=i) for i in range(30)]
 
-            sales_month = item_data["SalesMonth"].values
-            sales_amount = item_data["predict_sales"].values
+            # Convert 'expiry' to numerical representation (number of days since a reference date)
+            expiry_numeric = (expiry - today).dt.days
 
-            sales_amount = sales_amount * self.normalise_data["predict_sales"].std() + self.normalise_data["predict_sales"].mean()
-
-            sales_month_scaled = sales_month * 30
+            # Multiply the converted 'expiry' by the scalar value
+            item_predicted_sales = item_predicted_sales * 30
 
             plt.figure(figsize=(10, 6))
-            plt.plot(sales_month_scaled, sales_amount, marker="o", label="Predicted Sales (SalesMonth)", color="blue")
-            plt.xlabel("Time Period (days)")
-            plt.ylabel("Predicted Sales Amount")
-            plt.title(f"Predicted Sales for ItemID {item_id_input} over a month")
+            plt.plot(expiry_numeric, item_predicted_sales, marker="o", color="blue", label="Predicted Sales")
+            plt.xlabel("Days from Today")
+            plt.ylabel("Predicted Sales")
+            plt.title(f"Predicted Sales for ItemID {item_id_input} over the next 30 days")
+            plt.xticks(rotation=45)
             plt.grid(True)
             plt.tight_layout()
             plt.legend()
-
-            plt.xlim(0, 30)
-
             plt.show()
         else:
             print("Incorrect Item ID input")
-
-
-
-
-
-
 
 
 
@@ -98,6 +91,5 @@ if __name__ == "__main__":
     final_cost = warehouse_predictor.compute_cost()
     print("Final cost:", final_cost)
 
-    item_ID_input = int(input("Enter the ItemID to predict SalesWeek: "))
-    warehouse_predictor.predict_sales_for_item(item_ID_input)  # Remove the "expiry" parameter
-
+    item_ID_input = int(input("Enter the ItemID to predict sales over the next 30 days: "))
+    warehouse_predictor.predict_sales_for_item(item_ID_input, expiry)  # Pass ExpiryDate values

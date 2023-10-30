@@ -36,7 +36,7 @@ class WarehousePredictor:
         ones = np.ones([self.inputs.shape[0], 1])
         self.inputs = np.concatenate((ones, self.inputs), axis=1)
         self.outputs = self.normalised2_data["predict_sales"].values
-        expiry = self.tblitems_data["ExpiryDate"]
+        expiry = self.tblitems_data["ExpiryDate"]  # Include ExpiryDate values
         self.coefficients = np.zeros([1, self.inputs.shape[1]])
         return expiry
 
@@ -56,29 +56,22 @@ class WarehousePredictor:
         if item_id_input > 0:
             item_data = self.normalised2_data[self.normalised2_data['ItemID'] == item_id_input]
 
+            sales_week = item_data["SalesWeek"].values
             sales_month = item_data["SalesMonth"].values
             sales_amount = item_data["predict_sales"].values
 
-            sales_amount = sales_amount * self.normalise_data["predict_sales"].std() + self.normalise_data["predict_sales"].mean()
-
-            sales_month_scaled = sales_month * 30
-
             plt.figure(figsize=(10, 6))
-            plt.plot(sales_month_scaled, sales_amount, marker="o", label="Predicted Sales (SalesMonth)", color="blue")
-            plt.xlabel("Time Period (days)")
+            plt.plot(sales_week, sales_amount, marker="o", label="Predicted Sales (SalesWeek)", color="blue")
+            plt.plot(sales_month, sales_amount, marker="x", label="Predicted Sales (SalesMonth)", color="green")
+            plt.xlabel("Time Period")
             plt.ylabel("Predicted Sales Amount")
-            plt.title(f"Predicted Sales for ItemID {item_id_input} over a month")
+            plt.title(f"Predicted Sales for ItemID {item_id_input}")
             plt.grid(True)
             plt.tight_layout()
             plt.legend()
-
-            plt.xlim(0, 30)
-
             plt.show()
         else:
             print("Incorrect Item ID input")
-
-
 
 
 
