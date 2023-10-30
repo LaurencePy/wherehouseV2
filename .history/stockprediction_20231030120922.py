@@ -79,12 +79,19 @@ class WarehousePredictor:
             print("Incorrect Item ID input")
 
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
     warehouse_predictor = WarehousePredictor()
     warehouse_predictor.read_data()
     expiry = warehouse_predictor.prepare_inputs_outputs()  # Receive ExpiryDate values
     learning_rate = 0.1
-    iterations = 1000
+    iterations = 5000
     warehouse_predictor.gradient_descent(learning_rate, iterations)
 
     print("Optimised coefficients:", warehouse_predictor.coefficients)
