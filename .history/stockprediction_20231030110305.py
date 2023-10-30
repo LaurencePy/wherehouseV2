@@ -14,10 +14,10 @@ tblsales_data = pd.read_csv(
     r"C:\Users\laeat\Documents\Coding\wherehouse database\tblSales.csv"
 )
 tblitems_data = pd.read_csv(
-    r"C:\Users\laeat\Documents\Coding\wherehouse database\tblitems.csv"
+    r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\tblitems.csv"
 )
 sales_predict_data = pd.read_csv(
-    r"C:\Users\laeat\Documents\Coding\wherehouse database\sales_predict_data.csv"
+    r"C:\Users\laeat\Documents\Coding\wherehouse database stuff\sales_predict_data.csv"
 )
 
 tblsales_data["SaleDate"] = pd.to_datetime(tblsales_data["SaleDate"])
