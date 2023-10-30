@@ -1,7 +1,7 @@
 import mysql.connector
 import json
 
-class DataRetrieval:
+class WarehouseStatistics:
     def __init__(self, config_path):
         self.config_path = config_path
         self.load_config()
@@ -20,7 +20,7 @@ class DataRetrieval:
         )
         self.cursor = self.connection.cursor()
 
-    def retrieveDataTest(self):
+    def retrieve_data_ordered_by_item_id(self):
         self.cursor.execute("SELECT * FROM tblSalesStatistics ORDER BY ItemID ASC")
         result = self.cursor.fetchall()
         return result
@@ -32,9 +32,9 @@ class DataRetrieval:
 if __name__ == "__main__":
     config_file_path = r"C:\Users\laeat\Documents\Coding\Wherehousev2\app\build\intermediates\assets\debug\config.json"
 
-    warehouse = DataRetrieval(config_file_path)
+    warehouse = WarehouseStatistics(config_file_path)
 
-    results = warehouse.retrieveDataTest()
+    results = warehouse.retrieve_data_ordered_by_item_id()
 
     for row in results:
         print(row)

@@ -2,7 +2,7 @@ import mysql.connector
 import json
 
 
-with open("C:\\Users\\laeat\\Documents\\Coding\\config.json", "r") as config:
+with open(r"C:\Users\laeat\Documents\Coding\Wherehousev2\app\build\intermediates\assets\debug\config.json", "r") as config:
     configdata = json.load(config)
 
 
@@ -18,7 +18,7 @@ connection = mysql.connector.connect(
 cursor = connection.cursor()
 
 
-cursor.execute("SELECT * FROM tblSales")
+cursor.execute("SELECT * FROM tblSalesStatistics")
 result = cursor.fetchall()
 
 for row in result:

@@ -20,7 +20,7 @@ class DataRetrieval:
         )
         self.cursor = self.connection.cursor()
 
-    def retrieveDataTest(self):
+    def retrieve_data_ordered_by_item_id(self):
         self.cursor.execute("SELECT * FROM tblSalesStatistics ORDER BY ItemID ASC")
         result = self.cursor.fetchall()
         return result
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     warehouse = DataRetrieval(config_file_path)
 
-    results = warehouse.retrieveDataTest()
+    results = warehouse.retrieve_data_ordered_by_item_id()
 
     for row in results:
         print(row)
