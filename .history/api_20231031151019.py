@@ -1,25 +1,23 @@
 import mysql.connector
-from flask import Flask, request
+from flask import Flask
 from flask_cors import CORS
 import json
-from google.cloud import storage
+
+
 
 api = Flask(__name__)
 CORS(api)
+config_file_path = r"https://storage.cloud.google.com/iconic-parsec-395409.appspot.com/config.json"
 
 class DataRetrieval:
-    def __init__(self, config_bucket_name, config_file_name):
-        self.config_bucket_name = config_bucket_name
-        self.config_file_name = config_file_name
+    def __init__(self, config_path):
+        self.config_path = config_path
         self.load_config()
         self.connect_to_database()
 
     def load_config(self):
-        storage_client = storage.Client()
-        bucket = storage_client.bucket(self.config_bucket_name)
-        blob = bucket.blob(self.config_file_name)
-        config_content = blob.download_as_text()
-        self.configdata = json.loads(config_content)
+        with open(self.config_path, "r") as config_file:
+            self.configdata = json.load(config_file)
 
     def connect_to_database(self):
         self.connection = mysql.connector.connect(
@@ -39,13 +37,13 @@ class DataRetrieval:
         self.cursor.close()
         self.connection.close()
 
+data_retrieval = DataRetrieval(config_file_path)
+
 @api.route('/get_data', methods=['GET'])
 def get_data():
     results = data_retrieval.retrieveData()
-    return {"data": results}
+    return results
+
 
 if __name__ == "__main__":
-    config_bucket_name = "your-bucket-name"  # Replace with your bucket name
-    config_file_name = "config.json"  # Replace with the name of your config file in the bucket
-    data_retrieval = DataRetrieval(config_bucket_name, config_file_name)
     api.run(host='0.0.0.0', port=5000)

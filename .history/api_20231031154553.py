@@ -39,6 +39,7 @@ class DataRetrieval:
         self.cursor.close()
         self.connection.close()
 
+# Define the route to get data
 @api.route('/get_data', methods=['GET'])
 def get_data():
     results = data_retrieval.retrieveData()
