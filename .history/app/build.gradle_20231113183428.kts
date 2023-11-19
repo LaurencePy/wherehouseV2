@@ -18,7 +18,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -28,8 +28,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_8
+        targetCompatibility = JavaVersion.VERSION_8
     }
 
     kotlinOptions {
