@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 from flask import Flask, jsonify
+from collections import OrderedDict
 
 app = Flask(__name__)
 
@@ -38,15 +39,13 @@ class DataRetrieval:
         data = []
 
         for row in results:
+            row_dict = OrderedDict([
+                ('itemid', row[0]),
+                ('itemname', row[1]),
+                ('expirydate', row[2]),
+            ])
             
-            row_dictionary = {
-                'itemid': row[0],
-                'itemname': row[1],
-                'expirydate': row[2],
-            }
-            
-            
-            data.append(row_dictionary)
+            data.append(row_dict)
 
         DataRetrieval.close_connection(cursor, connection)
         return jsonify(data)

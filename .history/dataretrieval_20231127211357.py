@@ -35,20 +35,27 @@ class DataRetrieval:
         cursor.execute(SQLquery)
         results = cursor.fetchall()
 
+        # Initialize an empty list to store the final result
         data = []
 
+        # Iterate through each row in the result
         for row in results:
+            # Initialize an empty dictionary for each row
+            row_dict = {}
             
-            row_dictionary = {
-                'itemid': row[0],
-                'itemname': row[1],
-                'expirydate': row[2],
-            }
+            # Iterate through each column in the row
+            for i in range(len(cursor.description)):
+                # Get the column name
+                col_name = cursor.description[i][0]
+                # Add the column name and corresponding value to the dictionary
+                row_dict[col_name] = row[i]
             
-            
-            data.append(row_dictionary)
+            # Add the dictionary representing the row to the final list
+            data.append(row_dict)
 
         DataRetrieval.close_connection(cursor, connection)
+        
+        # Convert the list of dictionaries into a JSON array of objects
         return jsonify(data)
 
 @app.route('/get_tblitems', methods=['GET'])

@@ -35,21 +35,8 @@ class DataRetrieval:
         cursor.execute(SQLquery)
         results = cursor.fetchall()
 
-        data = []
-
-        for row in results:
-            
-            row_dictionary = {
-                'itemid': row[0],
-                'itemname': row[1],
-                'expirydate': row[2],
-            }
-            
-            
-            data.append(row_dictionary)
-
         DataRetrieval.close_connection(cursor, connection)
-        return jsonify(data)
+        return jsonify(results)
 
 @app.route('/get_tblitems', methods=['GET'])
 def get_tblitems():

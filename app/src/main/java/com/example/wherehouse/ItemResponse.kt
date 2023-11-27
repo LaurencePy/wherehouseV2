@@ -1,4 +1,5 @@
 package com.example.wherehouse
 
-class ItemResponse {
-}
+data class ItemResponse(
+    val items: List<DataModel>
+)

@@ -15,7 +15,16 @@
         android:text="View Stock"
         android:textSize="35sp" />
 
-
+    <!-- stock display-->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp" />
 
 
 

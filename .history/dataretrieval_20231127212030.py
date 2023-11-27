@@ -39,14 +39,14 @@ class DataRetrieval:
 
         for row in results:
             
-            row_dictionary = {
+            row_dict = {
                 'itemid': row[0],
                 'itemname': row[1],
                 'expirydate': row[2],
             }
             
             
-            data.append(row_dictionary)
+            data.append(row_dict)
 
         DataRetrieval.close_connection(cursor, connection)
         return jsonify(data)
