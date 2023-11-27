@@ -1,4 +1,4 @@
 package com.example.wherehouse
 
-class SalesStatisticsViewModel {
+class DataModel {
 }
