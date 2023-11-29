@@ -15,7 +15,7 @@
         android:text="View Stock"
         android:textSize="35sp" />
 
-    <!-- stock display-->
+    <!-- stock list view display-->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
