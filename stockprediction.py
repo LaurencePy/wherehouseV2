@@ -2,12 +2,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import date, timedelta
+import os
 
 class WarehousePredictor:
     def __init__(self):
         self.coefficients = None
         self.cost_history = None
-        
+
+    def read_data(self):
         self.tblsalesstatistics_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehouse database\tblSalesStatistics.csv")
         self.tblsales_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehouse database\tblSales.csv")
         self.tblitems_data = pd.read_csv(r"C:\Users\laeat\Documents\Coding\wherehouse database\tblitems.csv")
@@ -70,25 +72,33 @@ class WarehousePredictor:
             plt.grid(True)
             plt.tight_layout()
             plt.legend()
-
+            #plt.show()
             plt.xlim(0, 30)
-
-            plt.show()
+            self.saving_graph(item_id_input, graph_location)
         else:
-            print("Incorrect Item ID input")
+            print("Invalid Item ID input")
+
+    def saving_graph(self, item_id, graph_location):
+        plt.savefig(os.path.join(graph_location, f'graph_{item_id}.png'))
+        plt.close()
+
 
 
 if __name__ == "__main__":
+    graph_location = r'C:\Users\laeat\Documents\Coding\Wherehousev2\wherehouseV2\graphs'
     warehouse_predictor = WarehousePredictor()
+    warehouse_predictor.read_data()
     expiry = warehouse_predictor.prepare_inputs_outputs()
     learning_rate = 0.1
     iterations = 1000
     warehouse_predictor.gradient_descent(learning_rate, iterations)
 
-    print("Optimised coefficients:", warehouse_predictor.coefficients)
+    #print("Optimised coefficients:", warehouse_predictor.coefficients)
     final_cost = warehouse_predictor.compute_cost()
-    print("Final cost:", final_cost)
+    #print("Final cost:", final_cost)
 
-    item_ID_input = int(input("Enter the ItemID to predict SalesWeek: "))
-    warehouse_predictor.predict_sales_for_item(item_ID_input)
-
+    #item_ID_input = int(input("Enter the ItemID to predict SalesWeek: "))
+    #warehouse_predictor.predict_sales_for_item(item_ID_input)
+    
+    #for item_id in range(1, 101):
+    #    warehouse_predictor.predict_sales_for_item(item_id)

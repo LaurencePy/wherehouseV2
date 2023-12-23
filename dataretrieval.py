@@ -1,6 +1,10 @@
 import mysql.connector
 import json
 from flask import Flask, jsonify
+from flask import send_from_directory
+from flask import render_template
+import os
+
 
 app = Flask(__name__)
 
@@ -54,7 +58,7 @@ class DataRetrieval:
 @app.route('/get_tblitems', methods=['GET'])
 def get_tblitems():
     return DataRetrieval.fetchdata("tblitems")
-
+##I think the error may occur due to the row/column lists above not applying to tbllocations
 @app.route('/get_tbllocations', methods=['GET'])
 def get_tbllocations():
     return DataRetrieval.fetchdata("tbllocations")
@@ -67,5 +71,20 @@ def get_tblsales():
 def get_tblsalesstatistics():
     return DataRetrieval.fetchdata("tblsalesstatistics")
 
+
+@app.route('/list_graphs')
+def list_graphs():
+    graphs = '/graphs'
+    files = os.listdir(graphs)
+    return render_template('list_graphs.html', files=files)
+
+
+
+@app.route('/graph_<int:graph_id>.png')
+def serve_graph(graph_id):
+    filename = f'graph_{graph_id}.png'
+    return send_from_directory('static', filename)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
+

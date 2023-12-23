@@ -29,7 +29,7 @@ class ListAdapter(
         val itemInfo = if (item != null) {
             "Item ID: ${item?.itemId}\nItem Name: ${item.itemName}\nExpiry Date: ${item?.expiryDate}"
         } else {
-            // error handling
+            // error handling if the item is null
             "No data available"
         }
 
