@@ -37,7 +37,10 @@ class StockPrediction : AppCompatActivity() {
 
         spinner = findViewById(R.id.spinner)
         imageView = findViewById(R.id.imageView)
-
+        /* used to set graphs as an array for selection from the spinnner
+        Then I use the nomenclature of i + 1 to iterate the names of the graphs
+        so they can be identified within the spinner
+        */
         val graphs = Array(100) { i -> "graph_${i + 1}.png" }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, graphs)
         spinner.adapter = adapter

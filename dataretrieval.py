@@ -81,7 +81,7 @@ def list_graphs():
 
 
 @app.route('/graph_<int:graph_id>.png')
-def serve_graph(graph_id):
+def send_graph(graph_id):
     filename = f'graph_{graph_id}.png'
     return send_from_directory('static', filename)
 
