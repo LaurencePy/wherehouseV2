@@ -4,19 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="40dp"
     tools:context=".AddNewItemTypeToStock">
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="237dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:text="Add New Item Type to Stock"
         android:textSize="35sp" />
 
+    <EditText
+        android:id="@+id/itemIdInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginTop="20dp"
+        android:hint="Item ID"/>
 
+    <EditText
+        android:id="@+id/itemNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemIdInput"
+        android:layout_marginTop="20dp"
+        android:text="Item Name"/>
 
+    <EditText
+        android:id="@+id/expiryDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemNameInput"
+        android:layout_marginTop="20dp"
+        android:text="Expiry Date"/>
 
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/expiryDateInput"
+        android:layout_marginTop="20dp"
+        android:text="Submit"/>
 
 </RelativeLayout>

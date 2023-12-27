@@ -1,4 +1,7 @@
 package com.example.wherehouse
 
-class Response {
-}
+data class Response(
+
+    val status: String
+
+)
