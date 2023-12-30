@@ -35,7 +35,7 @@ class ViewStock : AppCompatActivity() {
                     // error checking that the data is not null
                     data?.let {
                         // Logging the API's data response for me to test the data response
-                        Log.d("API_RESPONSE", "Response: $data")
+                        Log.d("API RESPONSE", "Response: $data")
 
                         // Creating and setting up the adapter to display the data in the ListView
                         val adapter = ListAdapter(this@ViewStock, R.layout.list_item_layout, it)
@@ -43,7 +43,7 @@ class ViewStock : AppCompatActivity() {
                     }
                 } else {
                     // Logs the error code to the Logcat panel so that I can identify errors and debug the program
-                    Log.e("API_RESPONSE", "API call failed with code ${response.code()}")
+                    Log.e("API RESPONSE", "error code: ${response.code()}")
                 }
             }
 
@@ -51,9 +51,9 @@ class ViewStock : AppCompatActivity() {
             override fun onFailure(call: Call<List<DataModel>>, t: Throwable) {
                 try {
                     val errorResponse = (t as HttpException).response()?.errorBody()?.string()
-                    Log.e("API_RESPONSE", "API call failed: $errorResponse")
+                    Log.e("API RESPONSE", "fail: $errorResponse")
                 } catch (e: Exception) {
-                    Log.e("API_RESPONSE", "API call failed: ${t.message}")
+                    Log.e("API RESPONSE", "fail: ${t.message}")
                 }
             }
         })

@@ -48,4 +48,12 @@
         android:layout_marginTop="20dp"
         android:text="Submit"/>
 
+    <TextView
+        android:id="@+id/responseView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitButton"
+        android:text="Response here"
+        android:layout_marginTop="20dp"/>
+
 </RelativeLayout>

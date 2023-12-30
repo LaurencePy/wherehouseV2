@@ -1,6 +1,6 @@
 package com.example.wherehouse
 
-data class Response(
+data class Responses(
 
 
     val message: String,

@@ -15,5 +15,5 @@ interface Api {
     fun getImage(@Path("imageName") imageName: String): Call<ResponseBody>
 
     @POST("/add_item")
-    fun addItem(@Body newItem: DataModel): Call<Response>
+    fun addItem(@Body newItem: DataModel): Call<Responses>
 }

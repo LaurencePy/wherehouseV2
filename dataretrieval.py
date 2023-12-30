@@ -3,6 +3,7 @@ import json
 from flask import Flask, jsonify
 from flask import send_from_directory
 from flask import render_template
+from flask import request
 import os
 
 
@@ -35,8 +36,8 @@ class DataRetrieval:
     def fetchdata(table):
         connection, cursor = DataRetrieval.connect_to_database()
 
-        SQLquery = f"SELECT * FROM {table} ORDER BY ItemID ASC"
-        cursor.execute(SQLquery)
+        sql_query = f"SELECT * FROM {table} ORDER BY ItemID ASC"
+        cursor.execute(sql_query)
         results = cursor.fetchall()
 
         data = []
@@ -84,6 +85,18 @@ def list_graphs():
 def send_graph(graph_id):
     filename = f'graph_{graph_id}.png'
     return send_from_directory('static', filename)
+
+
+@app.route('/add_item', methods=['POST'])
+def add_item():
+    data = request.json
+    item_id = data['itemid']
+    item_name = data['itemname']
+    expiry_date = data['expirydate']
+    connection, cursor = DataRetrieval.connect_to_database()
+    cursor = connection.cursor()
+    sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate) VALUES (%s, %s, %s)"
+    return jsonify({'status': 'success'})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
