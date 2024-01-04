@@ -48,11 +48,19 @@
         android:layout_marginTop="20dp"
         android:text="Expiry Date"/>
 
+    <EditText
+        android:id="@+id/locationInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quantityInput"
+        android:layout_marginTop="20dp"
+        android:text="Expiry Date"/>
+
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quantityInput"
+        android:layout_below="@id/locationInput"
         android:layout_marginTop="20dp"
         android:text="Submit"/>
 

@@ -84,6 +84,30 @@ def add_item():
     sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate) VALUES (%s, %s, %s)"
     return jsonify({'status': 'success'})
 
+@app.route('/add_to_quantity', methods=['POST'])
+def update_item_quantity():
+    data = request.get_json()
+    item_id = data['ItemID']
+    additional_quantity = data['addToQuantity']
+
+    connection, cursor = DataRetrieval.connect_to_database()
+    cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
+    result = cursor.fetchone()
+    if result:
+        current_quantity = result[0]
+        new_quantity = current_quantity + additional_quantity
+
+        cursor.execute("UPDATE tblitems SET Quantity = %s WHERE ItemID = %s", (new_quantity, item_id))
+        connection.commit()
+        message = 'Quantity updated successfully'
+    else:
+        message = 'Item not found'
+
+    cursor.close()
+    connection.close()
+
+    return jsonify({'message': message}), 200
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
 

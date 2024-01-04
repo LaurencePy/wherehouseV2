@@ -1,4 +1,8 @@
 package com.example.wherehouse
+import com.google.gson.annotations.SerializedName
+data class AlterQuantityModel(
+    @SerializedName("ItemID")
+    val ItemID: Int,
 
-class AlterQuantityModel {
-}
+    val addToQuantity: Int
+)

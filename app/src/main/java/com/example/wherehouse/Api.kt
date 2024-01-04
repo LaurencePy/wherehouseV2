@@ -16,4 +16,9 @@ interface Api {
 
     @POST("/add_item")
     fun addItem(@Body newItem: DataModel): Call<Responses>
+
+
+    @POST("/add_to_quantity")
+    fun updateItemQuantity(@Body request: AlterQuantityModel): Call<ResponseBody>
+
 }

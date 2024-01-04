@@ -23,6 +23,7 @@ class AddNewItemTypeToStock : AppCompatActivity() {
         val newItemName = findViewById<EditText>(R.id.itemNameInput)
         val newExpiryDate = findViewById<EditText>(R.id.expiryDateInput)
         val newQuantity = findViewById<EditText>(R.id.quantityInput)
+        val newLocation = findViewById<EditText>(R.id.locationInput)
         val submission = findViewById<Button>(R.id.submitButton)
 
         submission.setOnClickListener {
@@ -30,7 +31,8 @@ class AddNewItemTypeToStock : AppCompatActivity() {
                 itemId = newItemId.text.toString().toInt(),
                 itemName = newItemName.text.toString(),
                 expiryDate = newExpiryDate.text.toString(),
-                quantity = newQuantity.text.toString().toInt()
+                quantity = newQuantity.text.toString().toInt(),
+                location = newLocation.text.toString()
             )
             addItemToStock(item)
         }
