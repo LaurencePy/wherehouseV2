@@ -3,12 +3,15 @@ import com.google.gson.annotations.SerializedName
 import java.sql.Date
 
 data class DataModel(
-    @SerializedName("itemid")
+    @SerializedName("ItemID")
     val itemId: Int,
 
-    @SerializedName("itemname")
+    @SerializedName("ItemName")
     val itemName: String,
 
-    @SerializedName("expirydate")
-    val expiryDate: String
+    @SerializedName("ExpiryDate")
+    val expiryDate: String,
+
+    @SerializedName("Quantity")
+    val quantity: Int
 )

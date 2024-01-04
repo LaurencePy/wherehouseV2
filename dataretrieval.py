@@ -39,18 +39,13 @@ class DataRetrieval:
         sql_query = f"SELECT * FROM {table} ORDER BY ItemID ASC"
         cursor.execute(sql_query)
         results = cursor.fetchall()
-
+        columns = [col[0] for col in cursor.description]
         data = []
 
         for row in results:
             
-            row_dictionary = {
-                'itemid': row[0],
-                'itemname': row[1],
-                'expirydate': row[2],
-            }
-            
-            
+            row_dictionary = dict(zip(columns, row))
+
             data.append(row_dictionary)
 
         DataRetrieval.close_connection(cursor, connection)
@@ -59,7 +54,7 @@ class DataRetrieval:
 @app.route('/get_tblitems', methods=['GET'])
 def get_tblitems():
     return DataRetrieval.fetchdata("tblitems")
-##I think the error may occur due to the row/column lists above not applying to tbllocations
+
 @app.route('/get_tbllocations', methods=['GET'])
 def get_tbllocations():
     return DataRetrieval.fetchdata("tbllocations")
@@ -71,15 +66,6 @@ def get_tblsales():
 @app.route('/get_tblsalesstatistics', methods=['GET'])
 def get_tblsalesstatistics():
     return DataRetrieval.fetchdata("tblsalesstatistics")
-
-
-@app.route('/list_graphs')
-def list_graphs():
-    graphs = '/graphs'
-    files = os.listdir(graphs)
-    return render_template('list_graphs.html', files=files)
-
-
 
 @app.route('/graph_<int:graph_id>.png')
 def send_graph(graph_id):

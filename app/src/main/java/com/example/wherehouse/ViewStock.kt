@@ -22,7 +22,7 @@ class ViewStock : AppCompatActivity() {
         val call: Call<List<DataModel>> = RetrofitClient.apiService.getTblItems()
 
         /* Asynchronous API call to keep the app running while the call
-        is in progress alternatively to a synchronous API call
+        is in progress, alternatively to a synchronous API call
          */
         call.enqueue(object : Callback<List<DataModel>> {
 

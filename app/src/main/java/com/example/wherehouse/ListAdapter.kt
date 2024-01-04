@@ -27,7 +27,7 @@ class ListAdapter(
         val itemInfoTextView: TextView = view.findViewById(R.id.itemInfoTextView)
 
         val itemInfo = if (item != null) {
-            "Item ID: ${item?.itemId}\nItem Name: ${item.itemName}\nExpiry Date: ${item?.expiryDate}"
+            "Item ID: ${item.itemId}\nItem Name: ${item.itemName}\nExpiry Date: ${item.expiryDate}\nQuantity: ${item.quantity}"
         } else {
             // error handling if the item is null
             "No data available"

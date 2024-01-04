@@ -22,13 +22,15 @@ class AddNewItemTypeToStock : AppCompatActivity() {
         val newItemId = findViewById<EditText>(R.id.itemIdInput)
         val newItemName = findViewById<EditText>(R.id.itemNameInput)
         val newExpiryDate = findViewById<EditText>(R.id.expiryDateInput)
+        val newQuantity = findViewById<EditText>(R.id.quantityInput)
         val submission = findViewById<Button>(R.id.submitButton)
 
         submission.setOnClickListener {
             val item = DataModel(
                 itemId = newItemId.text.toString().toInt(),
                 itemName = newItemName.text.toString(),
-                expiryDate = newExpiryDate.text.toString()
+                expiryDate = newExpiryDate.text.toString(),
+                quantity = newQuantity.text.toString().toInt()
             )
             addItemToStock(item)
         }
