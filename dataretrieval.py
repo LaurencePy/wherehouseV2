@@ -85,7 +85,7 @@ def add_item():
     return jsonify({'status': 'success'})
 
 @app.route('/add_to_quantity', methods=['POST'])
-def update_item_quantity():
+def add_to_quantity():
     data = request.get_json()
     item_id = data['ItemID']
     additional_quantity = data['addToQuantity']
@@ -99,9 +99,33 @@ def update_item_quantity():
 
         cursor.execute("UPDATE tblitems SET Quantity = %s WHERE ItemID = %s", (new_quantity, item_id))
         connection.commit()
-        message = 'Quantity updated successfully'
+        message = 'Quantity updated!'
     else:
-        message = 'Item not found'
+        message = 'Invalid input.'
+
+    cursor.close()
+    connection.close()
+
+    return jsonify({'message': message}), 200
+
+@app.route('/remove_from_quantity', methods=['POST'])
+def remove_from_quantity():
+    data = request.get_json()
+    item_id = data['ItemID']
+    additional_quantity = data['addToQuantity']
+
+    connection, cursor = DataRetrieval.connect_to_database()
+    cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
+    result = cursor.fetchone()
+    if result:
+        current_quantity = result[0]
+        new_quantity = current_quantity - additional_quantity
+
+        cursor.execute("UPDATE tblitems SET Quantity = %s WHERE ItemID = %s", (new_quantity, item_id))
+        connection.commit()
+        message = 'Quantity updated!'
+    else:
+        message = 'Invalid input.'
 
     cursor.close()
     connection.close()

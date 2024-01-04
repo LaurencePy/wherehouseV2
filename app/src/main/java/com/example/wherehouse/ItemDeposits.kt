@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.integration.android.IntentIntegrator
@@ -58,29 +59,30 @@ class ItemDeposits : AppCompatActivity() {
     }
 
     private fun updateItemQuantity(ItemID: String, additionalQuantity: String) {
-        val apiService = retrofit.create(Api::class.java) // Create API service instance
-
+        val apiService = retrofit.create(Api::class.java)
+        /* converting values to integers in a seperate variable
+        as I was having issues where it was required as a string
+         */
         val ItemIDInteger = ItemID.toIntOrNull() ?: return
         val addToQuantityInteger = additionalQuantity.toIntOrNull() ?: return
-
+        val responseTextView = findViewById<TextView>(R.id.responseView)
         val updateRequest = AlterQuantityModel(ItemIDInteger, addToQuantityInteger)
 
         apiService.updateItemQuantity(updateRequest).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    // Handle success - Notify the user that the quantity has been updated
-                    Toast.makeText(this@ItemDeposits, "Quantity updated successfully", Toast.LENGTH_LONG).show()
+                    responseTextView.text = "Success!"
                 } else {
-                    // Handle API response failure - Log the error and notify the user
-                    Log.e("API_ERROR", "Response error: ${response.errorBody()?.string()}")
-                    Toast.makeText(this@ItemDeposits, "Failed to update quantity", Toast.LENGTH_LONG).show()
+                    responseTextView.text = ":( Error, please contact administrator"
+                    Log.e("ERROR", "Response: ${response.errorBody()?.string()}")
+
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 // Handle API call failure - Log the error and notify the user
-                Log.e("API_ERROR", "Call failed: ${t.message}")
-                Toast.makeText(this@ItemDeposits, "API call failed: ${t.message}", Toast.LENGTH_LONG).show()
+                Log.e("ERROR", "Call failed: ${t.message}")
+                responseTextView.text = ":( Error, please contact administrator"
             }
         })
     }

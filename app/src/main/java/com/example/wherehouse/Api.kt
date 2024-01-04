@@ -21,4 +21,7 @@ interface Api {
     @POST("/add_to_quantity")
     fun updateItemQuantity(@Body request: AlterQuantityModel): Call<ResponseBody>
 
+    @POST("/remove_from_quantity")
+    fun removeFromQuantity(@Body request: AlterQuantityModel): Call<ResponseBody>
+
 }

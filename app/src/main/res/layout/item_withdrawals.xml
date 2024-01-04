@@ -4,19 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemWithdrawals">
+    tools:context=".StockPrediction">
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="237dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Item Withdrawals"
-        android:textSize="35sp" />
+        android:textSize="35sp"
+        android:gravity="center" />
 
+    <TextView
+        android:id="@+id/selectItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginTop="20dp"
+        android:text="Select item ID"
+        android:textSize="15sp"
+        android:gravity="center" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectItem"
+        android:layout_marginTop="20dp" />
 
+    <Button
+        android:id="@+id/scanBarcodeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:layout_marginTop="20dp"
+        android:text="Scan Barcode" />
 
+    <EditText
+        android:id="@+id/editQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scanBarcodeButton"
+        android:layout_marginTop="20dp"
+        android:inputType="number"
+        android:hint="Enter quantity to withdraw" />
 
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editQuantity"
+        android:layout_marginTop="20dp"
+        android:text="Submit" />
+
+    <TextView
+        android:id="@+id/responseView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitButton"
+        android:text="Status response"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="120dp"/>
 </RelativeLayout>
