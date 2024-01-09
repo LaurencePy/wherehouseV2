@@ -47,18 +47,10 @@
         android:onClick="openitemDepositsActivity"
         android:text="Item Deposits" />
     <Button
-        android:id="@+id/cycleCountingButton"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_below="@+id/itemDepositsButton"
-        android:layout_marginTop="-1dp"
-        android:onClick="opencycleCountingActivity"
-        android:text="Cycle Counting" />
-    <Button
         android:id="@+id/addNewItemTypeToStockButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_below="@+id/cycleCountingButton"
+        android:layout_below="@+id/itemDepositsButton"
         android:layout_marginTop="-1dp"
         android:onClick="openaddNewItemTypeToStockActivity"
         android:text="Add New Item Type To Stock" />

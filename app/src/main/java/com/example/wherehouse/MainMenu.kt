@@ -28,10 +28,6 @@ class MainMenu : AppCompatActivity() {
         val intent = Intent(this, ItemDeposits::class.java)
         startActivity(intent)
     }
-    fun opencycleCountingActivity(view: View) {
-        val intent = Intent(this, CycleCounting::class.java)
-        startActivity(intent)
-    }
     fun openaddNewItemTypeToStockActivity(view: View) {
         val intent = Intent(this, AddNewItemTypeToStock::class.java)
         startActivity(intent)

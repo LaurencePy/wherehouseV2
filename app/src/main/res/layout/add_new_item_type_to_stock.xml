@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="Add New Item Type to Stock"
+        android:hint="Add New Item Type to Stock"
         android:textSize="35sp" />
 
     <EditText
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemIdInput"
         android:layout_marginTop="20dp"
-        android:text="Item Name"/>
+        android:hint="Item Name"/>
 
     <EditText
         android:id="@+id/expiryDateInput"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemNameInput"
         android:layout_marginTop="20dp"
-        android:text="Expiry Date"/>
+        android:hint="Expiry Date"/>
 
     <EditText
         android:id="@+id/quantityInput"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/expiryDateInput"
         android:layout_marginTop="20dp"
-        android:text="Expiry Date"/>
+        android:hint="Quantity"/>
 
     <EditText
         android:id="@+id/locationInput"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/quantityInput"
         android:layout_marginTop="20dp"
-        android:text="Expiry Date"/>
+        android:hint="Location"/>
 
     <Button
         android:id="@+id/submitButton"
@@ -62,14 +62,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/locationInput"
         android:layout_marginTop="20dp"
-        android:text="Submit"/>
+        android:hint="Submit"/>
 
     <TextView
         android:id="@+id/responseView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/submitButton"
-        android:text="Response here"
+        android:hint="Response here"
         android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

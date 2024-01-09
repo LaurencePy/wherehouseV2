@@ -81,13 +81,26 @@ def send_graph(graph_id):
 
 @app.route('/add_item', methods=['POST'])
 def add_item():
+
     data = request.json
-    item_id = data['itemid']
-    item_name = data['itemname']
-    expiry_date = data['expirydate']
+
+    # passing values received from the android application entered by the user
+
+    item_id = data['ItemID']
+    item_name = data['ItemName']
+    expiry_date = data['ExpiryDate']
+    quantity = data['Quantity']
+    location = data['Location']
+
     connection, cursor = DataRetrieval.connect_to_database()
     cursor = connection.cursor()
-    sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate) VALUES (%s, %s, %s)"
+
+    sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate, Quantity, Location) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(sql_query, (item_id, item_name, expiry_date, quantity, location))
+    
+    connection.commit()
+    cursor.close()
+    connection.close()
     return jsonify({'status': 'success'})
 
 #item deposits
