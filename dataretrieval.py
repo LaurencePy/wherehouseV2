@@ -12,11 +12,16 @@ app = Flask(__name__)
 class DataRetrieval:
     config_path = r"C:\Users\laeat\Documents\Coding\Wherehousev2\wherehouseV2\app\build\intermediates\assets\debug\config.json"
 
+
+    # @staticmethod used because the functions are self-contained, 
+    # they dont depend on data that changes each time the function is used 
     @staticmethod
     def connect_to_database():
         with open(DataRetrieval.config_path, "r") as config_file:
             configdata = json.load(config_file)
 
+
+        #config file stored seperately for security
         connection = mysql.connector.connect(
             user=configdata["user"],
             password=configdata["password"],
@@ -35,7 +40,8 @@ class DataRetrieval:
     @staticmethod
     def fetchdata(table):
         connection, cursor = DataRetrieval.connect_to_database()
-
+        
+        # fetching data, with a function that adapts to each different table to be displayed.
         sql_query = f"SELECT * FROM {table} ORDER BY ItemID ASC"
         cursor.execute(sql_query)
         results = cursor.fetchall()
@@ -84,6 +90,8 @@ def add_item():
     sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate) VALUES (%s, %s, %s)"
     return jsonify({'status': 'success'})
 
+#item deposits
+#POST method for pushing updates to the server
 @app.route('/add_to_quantity', methods=['POST'])
 def add_to_quantity():
     data = request.get_json()
@@ -91,12 +99,14 @@ def add_to_quantity():
     additional_quantity = data['addToQuantity']
 
     connection, cursor = DataRetrieval.connect_to_database()
+    # finding the correct item by it's ItemID
     cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
     result = cursor.fetchone()
     if result:
         current_quantity = result[0]
+        # adding quantity to show deposited items
         new_quantity = current_quantity + additional_quantity
-
+        # changing the quantity to the updated value
         cursor.execute("UPDATE tblitems SET Quantity = %s WHERE ItemID = %s", (new_quantity, item_id))
         connection.commit()
         message = 'Quantity updated!'
@@ -108,19 +118,21 @@ def add_to_quantity():
 
     return jsonify({'message': message}), 200
 
+#Item withdrawals
 @app.route('/remove_from_quantity', methods=['POST'])
 def remove_from_quantity():
     data = request.get_json()
     item_id = data['ItemID']
     additional_quantity = data['addToQuantity']
-
+    # finding the correct item by it's ItemID
     connection, cursor = DataRetrieval.connect_to_database()
     cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
     result = cursor.fetchone()
     if result:
         current_quantity = result[0]
+        # subtracting quantity to show withdrawn items
         new_quantity = current_quantity - additional_quantity
-
+        # changing the quantity to the updated value
         cursor.execute("UPDATE tblitems SET Quantity = %s WHERE ItemID = %s", (new_quantity, item_id))
         connection.commit()
         message = 'Quantity updated!'
