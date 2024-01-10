@@ -105,6 +105,7 @@ def add_item():
 
 #item deposits
 #POST method for pushing updates to the server
+
 @app.route('/add_to_quantity', methods=['POST'])
 def add_to_quantity():
     data = request.get_json()
@@ -156,6 +157,31 @@ def remove_from_quantity():
     connection.close()
 
     return jsonify({'message': message}), 200
+
+
+@app.route('/edit_item', methods=['POST'])
+def edit_item():
+
+    # adaptation from previous code above (item deposit/withdrawal)
+    # with more data points included 
+    data = request.get_json()
+    item_id = data['ItemID']
+    new_item_name = data['ItemName']
+    new_expiry_date = data['ExpiryDate']
+    new_quantity = data['Quantity']
+    new_location = data['Location']
+
+    connection, cursor = DataRetrieval.connect_to_database()
+    # SQL statement
+    cursor.execute("UPDATE tblitems SET ItemName = %s, ExpiryDate = %s, Quantity = %s, Location = %s WHERE ItemID = %s", (new_item_name, new_expiry_date, new_quantity, new_location, item_id))
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+    message = "updated!"
+    return jsonify({'message': message}), 200
+
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
