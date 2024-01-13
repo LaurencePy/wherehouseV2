@@ -9,69 +9,68 @@ import os
 
 app = Flask(__name__)
 
-class DataRetrieval:
-    config_path = r"C:\Users\laeat\Documents\Coding\Wherehousev2\wherehouseV2\app\build\intermediates\assets\debug\config.json"
+
+config_path = r"C:\Users\laeat\Documents\Coding\Wherehousev2\wherehouseV2\app\build\intermediates\assets\debug\config.json"
 
 
-    # @staticmethod used because the functions are self-contained, 
-    # they dont depend on data that changes each time the function is used 
-    @staticmethod
-    def connect_to_database():
-        with open(DataRetrieval.config_path, "r") as config_file:
-            configdata = json.load(config_file)
+#  used because the functions are self-contained, 
+ # they dont depend on data that changes each time the function is used 
+
+def connect_to_database():
+    with open(config_path, "r") as config_file:
+        configdata = json.load(config_file)
 
 
         #config file stored seperately for security
-        connection = mysql.connector.connect(
-            user=configdata["user"],
-            password=configdata["password"],
-            host=configdata["host"],
-            database=configdata["database"]
+    connection = mysql.connector.connect(
+        user=configdata["user"],
+        password=configdata["password"],
+        host=configdata["host"],
+        database=configdata["database"]
         )
 
-        cursor = connection.cursor()
-        return connection, cursor
+    cursor = connection.cursor()
+    return connection, cursor
 
-    @staticmethod
-    def close_connection(cursor, connection):
-        cursor.close()
-        connection.close()
+def close_connection(cursor, connection):
+    cursor.close()
+    connection.close()
 
-    @staticmethod
-    def fetchdata(table):
-        connection, cursor = DataRetrieval.connect_to_database()
+    
+def fetchdata(table):
+    connection, cursor = connect_to_database()
+    
+    # fetching data, with a function that adapts to each different table to be displayed.
+    sql_query = f"SELECT * FROM {table} ORDER BY ItemID ASC"
+    cursor.execute(sql_query)
+    results = cursor.fetchall()
+    columns = [col[0] for col in cursor.description]
+    data = []
+
+    for row in results:
         
-        # fetching data, with a function that adapts to each different table to be displayed.
-        sql_query = f"SELECT * FROM {table} ORDER BY ItemID ASC"
-        cursor.execute(sql_query)
-        results = cursor.fetchall()
-        columns = [col[0] for col in cursor.description]
-        data = []
+        row_dictionary = dict(zip(columns, row))
 
-        for row in results:
-            
-            row_dictionary = dict(zip(columns, row))
+        data.append(row_dictionary)
 
-            data.append(row_dictionary)
-
-        DataRetrieval.close_connection(cursor, connection)
-        return jsonify(data)
+    close_connection(cursor, connection)
+    return jsonify(data)
 
 @app.route('/get_tblitems', methods=['GET'])
 def get_tblitems():
-    return DataRetrieval.fetchdata("tblitems")
+    return fetchdata("tblitems")
 
 @app.route('/get_tbllocations', methods=['GET'])
 def get_tbllocations():
-    return DataRetrieval.fetchdata("tbllocations")
+    return fetchdata("tbllocations")
 
 @app.route('/get_tblsales', methods=['GET'])
 def get_tblsales():
-    return DataRetrieval.fetchdata("tblsales")
+    return fetchdata("tblsales")
 
 @app.route('/get_tblsalesstatistics', methods=['GET'])
 def get_tblsalesstatistics():
-    return DataRetrieval.fetchdata("tblsalesstatistics")
+    return fetchdata("tblsalesstatistics")
 
 @app.route('/graph_<int:graph_id>.png')
 def send_graph(graph_id):
@@ -92,7 +91,7 @@ def add_item():
     quantity = data['Quantity']
     location = data['Location']
 
-    connection, cursor = DataRetrieval.connect_to_database()
+    connection, cursor = connect_to_database()
     cursor = connection.cursor()
 
     sql_query = "INSERT INTO tblitems (ItemID, ItemName, ExpiryDate, Quantity, Location) VALUES (%s, %s, %s, %s, %s)"
@@ -112,7 +111,7 @@ def add_to_quantity():
     item_id = data['ItemID']
     additional_quantity = data['addToQuantity']
 
-    connection, cursor = DataRetrieval.connect_to_database()
+    connection, cursor = connect_to_database()
     # finding the correct item by it's ItemID
     cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
     result = cursor.fetchone()
@@ -139,7 +138,7 @@ def remove_from_quantity():
     item_id = data['ItemID']
     additional_quantity = data['addToQuantity']
     # finding the correct item by it's ItemID
-    connection, cursor = DataRetrieval.connect_to_database()
+    connection, cursor = connect_to_database()
     cursor.execute("SELECT Quantity FROM tblitems WHERE ItemID = %s", (item_id,))
     result = cursor.fetchone()
     if result:
@@ -171,7 +170,7 @@ def edit_item():
     new_quantity = data['Quantity']
     new_location = data['Location']
 
-    connection, cursor = DataRetrieval.connect_to_database()
+    connection, cursor = connect_to_database()
     # SQL statement
     cursor.execute("UPDATE tblitems SET ItemName = %s, ExpiryDate = %s, Quantity = %s, Location = %s WHERE ItemID = %s", (new_item_name, new_expiry_date, new_quantity, new_location, item_id))
     connection.commit()
