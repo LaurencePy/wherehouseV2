@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
         android:layout_marginTop="20dp"
-        android:prompt="Select Table"
         android:spinnerMode="dropdown"
         android:hint="Select Table" />
 

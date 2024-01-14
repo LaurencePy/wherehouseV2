@@ -1,4 +1,8 @@
 package com.example.wherehouse
+import com.google.gson.annotations.SerializedName
+data class DataModelTblLocations (
 
-class DataModelTblLocations {
-}
+    @SerializedName("ItemID")
+    val itemId: Int,
+
+)

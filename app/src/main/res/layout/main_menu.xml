@@ -63,4 +63,13 @@
         android:onClick="openstockPredictionActivity"
         android:text="Stock Prediction" />
 
+    <Button
+        android:id="@+id/downloadDataButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_below="@+id/stockPredictionButton"
+        android:layout_marginTop="-1dp"
+        android:onClick="opendownloadDataActivity"
+        android:text="Download Data" />
+
 </RelativeLayout>

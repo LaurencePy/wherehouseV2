@@ -6,9 +6,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitClient {
+
     /* My Flask HTTP server IP and port base URL for where the data will be accessed.
-    Then the resource e.g. /get_tblitems is added on when needed
-     */
+        Then the resource e.g. /get_tblitems is added on when needed
+         */
     private const val BASE_URL = "http://192.168.1.2:5000"
 
     private val gson = GsonBuilder()

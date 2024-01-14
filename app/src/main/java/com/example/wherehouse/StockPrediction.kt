@@ -26,10 +26,6 @@ class StockPrediction : AppCompatActivity() {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    interface ApiService {
-        @GET("{imageName}")
-        fun getImage(@Path("imageName") imageName: String): Call<ResponseBody>
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +53,7 @@ class StockPrediction : AppCompatActivity() {
     }
 
     private fun loadImage(imageName: String) {
-        val service = retrofit.create(ApiService::class.java)
+        val service = retrofit.create(Api::class.java)
         val call = service.getImage(imageName)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

@@ -36,7 +36,8 @@ class MainMenu : AppCompatActivity() {
         val intent = Intent(this, StockPrediction::class.java)
         startActivity(intent)
     }
-
-
-
+    fun opendownloadDataActivity(view: View) {
+        val intent = Intent(this, DownloadData::class.java)
+        startActivity(intent)
+    }
 }

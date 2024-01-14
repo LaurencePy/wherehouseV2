@@ -1,5 +1,6 @@
 package com.example.wherehouse
 
+import android.content.ClipData
 import com.example.wherehouse.DataModel
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -13,6 +14,10 @@ interface Api {
 
     @GET("{imageName}")
     fun getImage(@Path("imageName") imageName: String): Call<ResponseBody>
+
+
+    @GET("/get_{table}")
+    fun downloadData(@Path("table") table: String): Call<List<DataModel>>
 
     @POST("/add_item")
     fun addItem(@Body newItem: DataModel): Call<Responses>

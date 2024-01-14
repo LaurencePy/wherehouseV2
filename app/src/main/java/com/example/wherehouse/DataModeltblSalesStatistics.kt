@@ -1,4 +1,9 @@
 package com.example.wherehouse
 
-class DataModeltblSalesStatistics {
-}
+import com.google.gson.annotations.SerializedName
+
+data class DataModeltblSalesStatistics (
+    @SerializedName("ItemID")
+    val itemId: Int,
+
+    )
