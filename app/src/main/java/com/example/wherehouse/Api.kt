@@ -17,7 +17,8 @@ interface Api {
 
 
     @GET("/get_{table}")
-    fun downloadData(@Path("table") table: String): Call<List<DataModel>>
+    fun downloadData(@Path("table") table: String): Call<ResponseBody>
+
 
     @POST("/add_item")
     fun addItem(@Body newItem: DataModel): Call<Responses>

@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
         android:layout_marginTop="20dp"
+        android:inputType="number"
         android:hint="Item ID"/>
 
     <EditText
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/expiryDateInput"
         android:layout_marginTop="20dp"
+        android:inputType="number"
         android:hint="Quantity"/>
 
     <EditText

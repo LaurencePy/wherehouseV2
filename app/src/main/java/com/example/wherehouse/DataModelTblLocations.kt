@@ -4,5 +4,5 @@ data class DataModelTblLocations (
 
     @SerializedName("ItemID")
     val itemId: Int,
-
+    val location: String
 )

@@ -66,7 +66,13 @@ class ItemDeposits : AppCompatActivity() {
         val ItemIDInteger = ItemID.toIntOrNull() ?: return
         val addToQuantityInteger = additionalQuantity.toIntOrNull() ?: return
         val responseTextView = findViewById<TextView>(R.id.responseView)
+
+        if (ItemIDInteger == null || addToQuantityInteger == null) {
+            responseTextView.text = "Error, incorrect input"
+            return
+        }
         val updateRequest = AlterQuantityModel(ItemIDInteger, addToQuantityInteger)
+
 
         apiService.updateItemQuantity(updateRequest).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

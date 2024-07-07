@@ -77,6 +77,30 @@ class EditStock : AppCompatActivity() {
         val location = editLocation.text.toString()
         val responseTextView = findViewById<TextView>(R.id.responseView)
 
+        // see document for regex credit
+
+        //YYYY-MM-DD format
+        val dateRegex = Regex("^\\d{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\\d|3[01])$")
+
+        //Must be a letter followed by a single number
+        val locationRegex = Regex("[A-Za-z][0-9]")
+
+        val quantityString = editQuantity.text.toString()
+
+        if (ItemIDInteger == null ||
+            itemName.isEmpty() ||
+            itemName.toIntOrNull() != null ||
+            itemName.toFloatOrNull() != null ||
+            !expiryDate.matches(dateRegex) ||
+            quantityString.toIntOrNull() == null ||
+            !location.matches(locationRegex) ||
+            location.isEmpty()) {
+            responseTextView.text = "Error, incorrect input"
+            return
+        }
+
+
+
         val updateRequest = DataModel(ItemIDInteger, itemName, expiryDate, quantity, location)
 
         apiService.updateItem(updateRequest).enqueue(object : Callback<ResponseBody> {

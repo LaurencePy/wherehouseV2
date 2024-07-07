@@ -15,6 +15,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.wherehouse.RetrofitClient
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.ResponseBody
 import java.io.File
 import java.io.FileOutputStream
 
@@ -31,10 +34,13 @@ class DownloadData : AppCompatActivity() {
         setContentView(R.layout.download_data)
 
         spinner = findViewById(R.id.spinnerSelectTable)
+
+        // populating the spinner with a choice of the tables to download
         val tables = arrayOf("tblitems", "tbllocations", "tblsalesstatistics", "tblsales")
         spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tables)
 
         val downloadButton = findViewById<Button>(R.id.downloadButton)
+
         downloadButton.setOnClickListener {
             val selectedTable = spinner.selectedItem.toString()
             downloadData(selectedTable)
@@ -44,51 +50,51 @@ class DownloadData : AppCompatActivity() {
     }
 
     private fun downloadData(table: String) {
-        RetrofitClient.apiService.downloadData(table).enqueue(object : Callback<List<DataModel>> {
-            override fun onResponse(call: Call<List<DataModel>>, response: Response<List<DataModel>>) {
+        RetrofitClient.apiService.downloadData(table).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val items = response.body()
-                    data?.let {
-                        saveToFile("$table.json", it)
-                        Log.d("DownloadData", "Response: $data")
+                    val jsonData = response.body()?.string()
+                    jsonData?.let {
 
+                        // handling different data models as the tables have different columns of data
+                        val dataModelType = when (table) {
+                            "tblitems" -> object : TypeToken<List<DataModel>>() {}.type
+                            "tblsales" -> object : TypeToken<List<DataModelTblSales>>() {}.type
+                            "tbllocations" -> object : TypeToken<List<DataModelTblLocations>>() {}.type
+                            "tblsalesstatistics" -> object : TypeToken<List<DataModelTblSalesStatistics>>() {}.type
+                            else -> return
+                        }
+                        // calling the saveToFile function to download the files as .json
+                        saveToFile("$table.json", it)
                     }
                 } else {
-                    val textView = findViewById<TextView>(R.id.responseView)
-                    textView.text = "Error, please contact administrator"
-
-
+                        val textView = findViewById<TextView>(R.id.responseView)
+                        textView.text = "Error, please contact administrator"
                 }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-
-                Log.e("DownloadData", "Error in downloadData", t)
-
-                runOnUiThread {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     val textView = findViewById<TextView>(R.id.responseView)
                     textView.text = "Error, please contact administrator"
-                }
             }
         })
     }
 
     private fun saveToFile(fileName: String, data: String) {
         try {
-            val file = File(
-                getExternalFilesDir(null),
-                fileName
-            ) // This will save to the app-specific directory
-            FileOutputStream(file).use { output ->
-                output.write(data.toByteArray())
-            }
+
+            // gets the directory for the wherehouse app to place files there
+            val file = File(getExternalFilesDir(null), fileName)
+            // writes the data to the file
+            file.writeText(data)
+
             val textView = findViewById<TextView>(R.id.responseView)
-            textView.text = "Successfully downloaded"
-        } catch (e: Exception) {
-            e.printStackTrace()
+            textView.text = "Successfully downloaded!"
+
+        } catch (error: Exception) {
             val textView = findViewById<TextView>(R.id.responseView)
             textView.text = "Error, please contact administrator"
         }
     }
-
 }
+

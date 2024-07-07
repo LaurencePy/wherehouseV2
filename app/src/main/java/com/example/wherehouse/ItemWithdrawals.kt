@@ -66,6 +66,11 @@ class ItemWithdrawals : AppCompatActivity() {
         val ItemIDInteger = ItemID.toIntOrNull() ?: return
         val removeFromQuantityInteger = additionalQuantity.toIntOrNull() ?: return
         val responseTextView = findViewById<TextView>(R.id.responseView)
+
+        if (ItemIDInteger == null || removeFromQuantityInteger == null) {
+            responseTextView.text = "Error, incorrect input"
+            return
+        }
         val updateRequest = AlterQuantityModel(ItemIDInteger, removeFromQuantityInteger)
 
         apiService.removeFromQuantity(updateRequest).enqueue(object : Callback<ResponseBody> {
