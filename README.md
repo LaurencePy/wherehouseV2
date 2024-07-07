@@ -3,6 +3,8 @@ Wherehouse Android application
 
 Incorporates the use of a FLask server with a MySQL Database to remotely store wherehouse data. Controlled via a mobile application.
 
+ *  APK File stored within app > release 
+
 **Functions**
 
 View Stock - displays all items in order of identifier code and views information about the item including item description, quantity in stock, location and expiry date. Includes a search bar to easily locate particular items based on the description
