@@ -21,5 +21,5 @@ Download Data - Allows the user to download a selected table of data to their de
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LaurencePy/wherehouseV2/main/wherehousev2.png?token=GHSAT0AAAAAACUOW5SWNB642D2GIFXMYC24ZUKSPDQ" />
+  <img src="wherehouse half size.png" />
 </p>
