@@ -4,6 +4,7 @@ Wherehouse Android application
 Full Development process to create a mobile application for use in my client's business warehouse for management of stock. 
 
 -Incorporates the use of a Flask server with a MySQL Database to remotely store wherehouse data. 
+
 -AI powered stock prediction leverages previous data stock levels to predict future sales. (Multivariable linear regression model)
 
 
