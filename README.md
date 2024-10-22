@@ -1,4 +1,9 @@
 # Wherehouse
+
+<p align="center">
+  <img src="wherehouse half size.png" />
+</p>
+
 Wherehouse Android application
 
 Full Development process to create a mobile application for use in my client's business warehouse for management of stock. 
@@ -30,6 +35,3 @@ Stock Prediction - shows the same page as “view stock” but allows the user t
 Download Data - Allows the user to download a selected table of data to their device. 
 
 
-<p align="center">
-  <img src="wherehouse half size.png" />
-</p>
